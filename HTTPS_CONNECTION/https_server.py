@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import ssl, os,re,posixpath,urllib,time
+import ssl, os,re,posixpath,urllib,time,logging
 from datetime import datetime
 
 hostname = 'localhost'
@@ -10,35 +11,45 @@ PATH_TO_PRIVATEKEY = r'files/key.pem'
 #openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes
 JPEG_MAGIC = bytearray(b'\xff\xd8\xff')
 
+FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
+logging.basicConfig(format=FORMAT,datefmt='%Y-%m-%d %H:%M:%S',filename='log.txt')
+
+
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'Hello, world!')
+        self.wfile.write(b'Hello')
         
     def do_POST(self):
-        [result, msg] = self.deal_post_data()
+        result= self.deal_post_data()
         if result == True:
             self.send_response(200)
         else:
-            self.send_error(400, "Image upload fails")
+            self.send_error(400, "Image upload failed")
         self.end_headers()
                 
     def deal_post_data(self):
         content_type = self.headers['content-type']
         if not content_type:
-            return (False, "Content-Type header doesn't contain boundary")
+            self.log_message("Content-Type header doesn't contain boundary")
+            return False
         boundary = content_type.split("=")[1].encode()
+        self.log_message("Boundary found: %s", boundary)
         remainbytes = int(self.headers['content-length'])
+        self.log_message("Content-length : %s", str(remainbytes))
         line = self.rfile.readline()
         remainbytes -= len(line)
         if not boundary in line:
-            return (False, "Content NOT begin with boundary")
+            self.log_message("Content NOT begin with boundary")
+            return False
+        
         line = self.rfile.readline()
         remainbytes -= len(line)
         fn = re.findall(r'Content-Disposition.*name="file"; filename="(.*)"', line.decode())
         if not fn:
-            return (False, "Can't find out file name...")
+            self.log_message("Uploaded file name : %s", fn)
+            return False
         
         date_time = datetime.fromtimestamp(time.time())
         fn = "".join([date_time.strftime("%Y_%d_%m_%H_%M_%S"),".jpg"])
@@ -56,7 +67,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         try:
             out = open(fn, 'wb')
         except IOError:
-            return (False, "Can't create file to write, do you have permission to write?")
+            self.log_message("Can't create file to write, do you have permission to write?")
+            return False
                 
         preline  = line
         while remainbytes > 0:
@@ -68,12 +80,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     preline = preline[0:-1]
                 out.write(preline)
                 out.close()
-                return (True, "File '%s' upload success!" % fn)
+                self.log_message("File '%s' upload success!" , fn)
+                return True
             else:
                 if (bytearray(preline)!=bytearray(b'\x0d\x0a')):
                     out.write(preline)
                 preline = line
-        return (False, "Unexpect Ends of data.")
+        self.log_message("Unexpect Ends of data.")
+        return False
     
     def translate_path(self, path):
         """Translate a /-separated PATH to the local filename syntax.
