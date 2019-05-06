@@ -1,0 +1,13 @@
+1.	Android APP(Patrick)
+	測試上傳AWS('http://ec2-18-219-71-129.us-east-2.compute.amazonaws.com:5566')
+	如何取得拍攝角度，距離?作為農委會API INPUT
+	呼叫農委會API，取得地號。
+	解決Fake GPS問題(直接取用GPS raw data in Android 7.0+)
+2.	初審伺服器(Peter)
+	照片上傳後的處理(程式判定解析度等)，回傳處理結果給APP
+	提供初審人員審查照片的功能(修改Piwigo)
+	讓通過初審照片上鏈與資料庫
+3.	資料上鏈/資料庫(弦安)
+	(確保資料可上鏈)資料上IPFS，Hash上Ropsten testnet
+	確保上鏈資料可被查詢，還原原始資料
+4.	Dashboard(Brandon)
