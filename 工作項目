@@ -1,4 +1,4 @@
-#1.	Android APP(Patrick)
+1.	Android APP(Patrick)
 	測試上傳AWS('http://ec2-18-219-71-129.us-east-2.compute.amazonaws.com:5566')
 	如何取得拍攝角度，距離?作為農委會API INPUT
 	呼叫農委會API，取得地號。
