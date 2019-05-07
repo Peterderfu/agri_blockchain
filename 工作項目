@@ -8,6 +8,6 @@
 	提供初審人員審查照片的功能(修改Piwigo)
 	讓通過初審照片上鏈與資料庫
 3.	資料上鏈/資料庫(弦安)
-	(確保資料可上鏈)資料上IPFS，Hash上Ropsten testnet
-	確保上鏈資料可被查詢，還原原始資料
+	(確保資料hash可上鏈)資料留在piwigo資料庫，Hash上Ropsten testnet
 4.	Dashboard(Brandon)
+	驗證存於piwigo的圖片hash與ethereum testnet上的hash相同
