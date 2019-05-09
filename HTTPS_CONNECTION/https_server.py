@@ -3,8 +3,8 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import ssl, os,re,posixpath,urllib,time,logging
 from datetime import datetime
 
-hostname = 'localhost'
-hostport = 80
+hostname = ''
+hostport = 5566
 SITE_ROOT = 'https://' + hostname + ':' + str(hostport)
 PATH_TO_CERTCHAIN = r'files/cert.pem'
 PATH_TO_PRIVATEKEY = r'files/key.pem'
@@ -52,7 +52,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             return False
         
         date_time = datetime.fromtimestamp(time.time())
-        fn = "".join([date_time.strftime("%Y_%d_%m_%H_%M_%S"),".jpg"])
+        fn = "".join([date_time.strftime("%Y_%m_%d_%H_%M_%S"),".jpg"])
         path = self.translate_path(self.path)
         fn = os.path.join(path, fn)
         line = self.rfile.readline() #read line of "Content-Type:"

@@ -10,7 +10,7 @@ hostname = '192.168.157.129'
 #     with context.wrap_socket(sock, server_hostname=hostname) as ssock:
 #         print(ssock.version())
 # url = 'https://192.168.157.129:8443'
-url = 'http://localhost:80'
+url = 'http://18.219.71.129:5566'
 
 multiple_files = {'file': ('pic.jpg', open('files/pic.jpg', 'rb'), 'image/jpeg')}
 
