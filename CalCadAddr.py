@@ -1,12 +1,12 @@
 import requests,json
-
+# This program must be run on 18.219.71.129
 # url and token from coagis.colife.org.tw
 url_token = {'url' : 'https://coagis.colife.org.tw/arcgis/rest/services/COA_Data/相片位置/MapServer/exts/RestSOE_COA_Data/CalCadAddr', \
-             'token' : 'sRwtJZ5mdzMWMzlReMnaRe9GWIYHVKc1xP6OycuBsFN4gO36FdrdyEBokgAuK_kVtHnySbr-cHJOggBGd5Ry_w..'}
+             'token' : 'sRwtJZ5mdzMWMzlReMnaRZQtzou2mkCFx2hvaNQiDl9_DP384A-pHhivEgHFoimUGz3olkqaSWmsDjOODjNmsA..'}
 
 # url and token from map.coa.gov.tw
 # url_token = {'url' : 'http://map.coa.gov.tw/arcgis/rest/services/COA_Data/相片位置/MapServer/exts/RestSOE_COA_Data/CalCadAddr', \
-#              'token' : 'RwtJZ5mdzMWMzlReMnaRYGH08TF4XVeDF5MN1-uhtlwvQx3cboOBjIMXW-0HZd8Mh8OC-0kiT7xlhAjh8UuRg..'}
+#              'token' : 'sRwtJZ5mdzMWMzlReMnaRY-yQNL92OgIwFvDkMUqw_ycJqFTm7t1jjDBb-abCp4W8wlvjfLkCkGMzgVhbhbogw..'}
 
 headers = {'Accept' : 'application/json, text/javascript, */*; q=0.01' , \
            'Origin' : 'null' , \
